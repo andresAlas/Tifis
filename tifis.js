@@ -1,4 +1,4 @@
-var tablero;
+var tablero, direccion;
 
 var teclas = 
 {
@@ -14,7 +14,7 @@ var tifis =
 	atrasOK: false,
 	derOK: false,
 	izqOK: false,
-	velocidad: 20,
+	velocidad: 10,
 	x: 0,
 	y: 0
 };
@@ -70,25 +70,54 @@ function teclado(evento)
 
 	if(codigo == teclas.UP)
 	{
-		tifis.y -= tifis.velocidad;
+		var antX, antY;
+        antX = tifis.x;
+        antY = tifis.y;        
+        tifis.y -= tifis.velocidad;
+        if (tifis.y < 0)
+        {
+            tifis.y += tifis.velocidad;
+        }
+        limiteUp(antX , antY);
 	}
 	if(codigo == teclas.DOWN)
 	{
-		tifis.y += tifis.velocidad;
-        if(tifis.y > 300)
+		var antX, antY;
+        antX = tifis.x;
+        antY = tifis.y;
+        tifis.y += tifis.velocidad;
+        if(tifis.y > 458)
         {
-        	tifis.y -= tifis.velocidad;
+            tifis.y -= tifis.velocidad;
         }
+        limiteDw(antX, antY);
 	}
 	if(codigo == teclas.LEFT)
 	{
-		tifis.x -= tifis.velocidad;
+		var antXl, antYl;
+        antXl = tifis.x;
+        antYl = tifis.y;
+        tifis.x -= tifis.velocidad;
+        if(tifis.x <0)
+        {
+            tifis.x += tifis.velocidad;
+        }
+        limiteLf(antXl,antYl);
 	}
 	if(codigo == teclas.RIGHT)
 	{
-		tifis.x += tifis.velocidad;
+		var antXl, antYl;
+        antXl = tifis.x;
+        antYl = tifis.y;
+        tifis.x += tifis.velocidad;
+        if(tifis.x > 462)
+        {
+            tifis.x -= tifis.velocidad;
+        }
+        limiteRg(antXl,antYl)
 	}
-	dibujar(codigo);
+	direccion = codigo;
+	dibujar();
 }
 
 function confirmarFondo()
@@ -129,16 +158,96 @@ function confirmarLiz()
 
 function dibujar()
 {
+	var tifisOrientada = tifis.frente;
 	if(fondo.imagenOK == true)
 	{
 		tablero.drawImage(fondo.imagen, 0, 0);
 	}   
-	if(tifis.frenteOK == true)
+	if(tifis.frenteOK && tifis.atrasOK && tifis.derOK && tifis.izqOK)
 	{
-		tablero.drawImage(tifis.frente, tifis.x, tifis.y);
-	} 
+		if(direccion == teclas.DOWN || direccion == undefined)
+		{
+			tifisOrientada = tifis.frente;
+		}
+		else if(direccion == teclas.UP)
+		{
+			tifisOrientada = tifis.atras;
+		}
+		else if(direccion == teclas.LEFT)
+		{
+			tifisOrientada = tifis.izq;
+		}
+		else if(direccion == teclas.RIGHT)
+		{
+			tifisOrientada = tifis.der;
+		}
+		tablero.drawImage(tifisOrientada, tifis.x, tifis.y); 
+	}
 	if(liz.imagenOK == true)
 	{
-		tablero.drawImage(liz.imagen, liz.x, liz.y);
-	}
+        tablero.drawImage(liz.imagen, liz.x, liz.y);    
+    }
+}
+
+function limiteUp(antX,antY)
+{
+    if(tifis.x < 140  && tifis.y > 140 && tifis.y < 242){
+        tifis.x = antX;
+        tifis.y = antY;
+    }
+    if(tifis.x < 240 && tifis.x > 167 && tifis.y > 140 && tifis.y < 242)
+    {
+        tifis.x = antX;
+        tifis.y = antY;
+    }
+    if(tifis.x > 110 && tifis.y < 400 && tifis.y > 300)
+    {
+        tifis.x = antX;
+        tifis.y = antY;
+    }
+}
+
+function limiteDw(antX,antY)
+{
+    if(tifis.y > 140 && tifis.y < 242 && tifis.x < 140){
+        tifis.x = antX;
+        tifis.y = antY;
+    }
+    if(tifis.x < 240 && tifis.x > 167 && tifis.y > 140 && tifis.y < 242)
+    {
+        tifis.x = antX;
+        tifis.y = antY;
+    }
+    if(tifis.x > 110 && tifis.y < 400 && tifis.y > 300)
+    {
+        tifis.x = antX;
+        tifis.y = antY;
+    }
+}
+
+function limiteLf(a,b)
+{
+    if(tifis.y > 140 && tifis.y < 242 && tifis.x < 140){
+        tifis.x = a;
+        tifis.y = b;
+    }
+    if(tifis.x < 240 && tifis.x > 167 && tifis.y > -10 && tifis.y < 242)
+    {
+        tifis.x = a;
+        tifis.y = b;
+    }
+}
+
+function limiteRg(antX, antY)
+{
+    if(tifis.x < 240 && tifis.x > 167 && tifis.y > -10 && tifis.y < 242)
+    {
+        tifis.x = antX;
+        tifis.y = antY;
+    }
+    if(tifis.x > 110 && tifis.y < 400 && tifis.y > 300)
+    {
+        tifis.x = antX;
+        tifis.y = antY;
+    }
 }
