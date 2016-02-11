@@ -1,12 +1,20 @@
 var tablero;
 
+var teclas = 
+{
+	UP: 38,
+    DOWN: 40,
+    LEFT: 37,
+    RIGHT: 39
+};
+
 var tifis = 
 {
 	frenteOK: false,
 	atrasOK: false,
 	derOK: false,
 	izqOK: false,
-	velosidad: 20,
+	velocidad: 20,
 	x: 0,
 	y: 0
 };
@@ -52,6 +60,35 @@ function inicio()
     liz.imagen = new Image();
     liz.imagen.src = "imagenes/liz.png";
     liz.imagen.onload = confirmarLiz;
+
+    document.addEventListener("keydown", teclado);
+}
+
+function teclado(evento)
+{
+	var codigo = evento.keyCode;
+
+	if(codigo == teclas.UP)
+	{
+		tifis.y -= tifis.velocidad;
+	}
+	if(codigo == teclas.DOWN)
+	{
+		tifis.y += tifis.velocidad;
+        if(tifis.y > 300)
+        {
+        	tifis.y -= tifis.velocidad;
+        }
+	}
+	if(codigo == teclas.LEFT)
+	{
+		tifis.x -= tifis.velocidad;
+	}
+	if(codigo == teclas.RIGHT)
+	{
+		tifis.x += tifis.velocidad;
+	}
+	dibujar(codigo);
 }
 
 function confirmarFondo()
@@ -98,19 +135,7 @@ function dibujar()
 	}   
 	if(tifis.frenteOK == true)
 	{
-		tablero.drawImage(tifis.frente, 0, 0);
-	} 
-	if(tifis.atrasOK == true)
-	{
-		tablero.drawImage(tifis.atras, 0, 0);
-	} 
-	if(tifis.derOK == true)
-	{
-		tablero.drawImage(tifis.der, 0, 0);
-	} 
-	if(tifis.izqOK == true)
-	{
-		tablero.drawImage(tifis.izq, 0, 0);
+		tablero.drawImage(tifis.frente, tifis.x, tifis.y);
 	} 
 	if(liz.imagenOK == true)
 	{
