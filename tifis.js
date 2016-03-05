@@ -2,7 +2,7 @@ var tablero, direccion;
 
 var teclas = 
 {
-	UP: 38,
+    UP: 38,
     DOWN: 40,
     LEFT: 37,
     RIGHT: 39
@@ -34,27 +34,27 @@ var fondo =
 
 function inicio()
 {
-	var canvas = document.getElementById("campo");
-	tablero = canvas.getContext("2d");
-
-	fondo.imagen = new Image();
-	fondo.imagen.src = fondo.imagenURL;
+    var canvas = document.getElementById("campo");
+    tablero = canvas.getContext("2d");
+   
+    fondo.imagen = new Image();
+    fondo.imagen.src = fondo.imagenURL;
     fondo.imagen.onload = confirmarFondo;
 
     tifis.frente = new Image();
-	tifis.frente.src = "imagenes/diana-frente.png";
+    tifis.frente.src = "imagenes/diana-frente.png";
     tifis.frente.onload = confirmarFrente;
 
     tifis.atras = new Image();
-	tifis.atras.src = "imagenes/diana-atras.png";
+    tifis.atras.src = "imagenes/diana-atras.png";
     tifis.atras.onload = confirmarAtras;
 
     tifis.der = new Image();
-	tifis.der.src = "imagenes/diana-der.png";
+    tifis.der.src = "imagenes/diana-der.png";
     tifis.der.onload = confirmarDer;
 
     tifis.izq = new Image();
-	tifis.izq.src = "imagenes/diana-izq.png";
+    tifis.izq.src = "imagenes/diana-izq.png";
     tifis.izq.onload = confirmarIzq;
 
     liz.imagen = new Image();
